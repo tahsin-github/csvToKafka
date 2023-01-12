@@ -3,12 +3,16 @@ package ReadCsv;
 import com.opencsv.CSVReader;
 import com.opencsv.bean.CsvToBean;
 import com.opencsv.bean.CsvToBeanBuilder;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.util.List;
 
 public class ReadCsvFile {
+
+    private static final Logger logger = LoggerFactory.getLogger(ReadCsvFile.class);
 
     private String csvFileName;
     private List personList;
@@ -28,7 +32,7 @@ public class ReadCsvFile {
             csvReader.close();
         }
         catch (Exception e) {
-            e.printStackTrace();
+            logger.error(String.valueOf(e));
         }
         return personList;
     }

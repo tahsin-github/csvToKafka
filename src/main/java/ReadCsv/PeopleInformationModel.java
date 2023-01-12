@@ -4,26 +4,29 @@ import com.opencsv.bean.CsvBindByName;
 
 public class PeopleInformationModel {
 
-    @CsvBindByName
+    @CsvBindByName(column = "id")
     private int id;
 
-    @CsvBindByName
+    @CsvBindByName(column = "firstname")
     private String firstname;
 
-    @CsvBindByName
+    @CsvBindByName(column = "lastname")
     private String lastname;
 
-    @CsvBindByName
+    @CsvBindByName(column = "email")
     private String email;
 
-    @CsvBindByName
+    @CsvBindByName(column = "email2")
     private String email2;
 
-    @CsvBindByName
+    @CsvBindByName(column = "profession")
     private String profession;
 
-    @CsvBindByName
+    @CsvBindByName(column = "FieldName")
     private String FieldName;
+
+    public PeopleInformationModel() {
+    }
 
     public PeopleInformationModel(int id, String firstname, String lastname, String email, String email2, String profession, String fieldName) {
         this.id = id;
@@ -32,7 +35,7 @@ public class PeopleInformationModel {
         this.email = email;
         this.email2 = email2;
         this.profession = profession;
-        FieldName = fieldName;
+        this.FieldName = fieldName;
     }
 
     public int getId() {
@@ -89,5 +92,18 @@ public class PeopleInformationModel {
 
     public void setFieldName(String fieldName) {
         FieldName = fieldName;
+    }
+
+    @Override
+    public String toString() {
+        return "PeopleInformationModel{" +
+                "id=" + id +
+                ", firstname='" + firstname + '\'' +
+                ", lastname='" + lastname + '\'' +
+                ", email='" + email + '\'' +
+                ", email2='" + email2 + '\'' +
+                ", profession='" + profession + '\'' +
+                ", FieldName='" + FieldName + '\'' +
+                '}';
     }
 }
