@@ -1,6 +1,8 @@
 package Consumer;
 
 import Producer.csvProducer;
+import ReadCsv.PeopleInformationModel;
+import Serdes.PersonModelDeserializer;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.apache.kafka.clients.consumer.ConsumerRecords;
@@ -28,12 +30,12 @@ public class SimpleConsumer {
         final String topicName = "simple-producer";
 
         props.setProperty(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, IntegerDeserializer.class.getName());
-        props.setProperty(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class.getName());
+        props.setProperty(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, PersonModelDeserializer.class.getName());
         props.setProperty(ConsumerConfig.GROUP_ID_CONFIG, groupId);
         props.setProperty(ConsumerConfig.AUTO_OFFSET_RESET_CONFIG, "earliest");
 
         // Create the Consumer
-        KafkaConsumer<Integer, String> consumer = new KafkaConsumer<Integer, String>(props);
+        KafkaConsumer<Integer, PeopleInformationModel> consumer = new KafkaConsumer<Integer, PeopleInformationModel>(props);
 
         // Subscribe the consumer to a topic
         consumer.subscribe(Arrays.asList(topicName));
@@ -41,10 +43,10 @@ public class SimpleConsumer {
         // Poll for the messages
         while (true){
             logger.info("Polling messages ... ");
-            ConsumerRecords<Integer, String> records = consumer.poll(Duration.ofMillis(10000));
+            ConsumerRecords<Integer, PeopleInformationModel> records = consumer.poll(Duration.ofMillis(10000));
 
-            for (ConsumerRecord<Integer, String> record : records) {
-                logger.info("Key : " + record.key() + " value : " + record.value());
+            for (ConsumerRecord<Integer, PeopleInformationModel> record : records) {
+                logger.info("Key : " + record.key() + " value : " + record.value().toString());
                 logger.info("Partition : " + record.partition() + " Offset : " + record.offset());
             }
 

@@ -2,6 +2,8 @@ package ReadCsv;
 
 import com.opencsv.bean.CsvBindByName;
 
+import java.io.Serializable;
+
 public class PeopleInformationModel {
 
     @CsvBindByName(column = "id")

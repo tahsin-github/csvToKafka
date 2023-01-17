@@ -2,12 +2,9 @@ package Producer;
 
 import ReadCsv.PeopleInformationModel;
 import ReadCsv.ReadCsvFile;
-import com.google.gson.Gson;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonParser;
+import Serdes.PersonModelSerializer;
 import org.apache.kafka.clients.producer.*;
 import org.apache.kafka.common.serialization.IntegerSerializer;
-import org.apache.kafka.common.serialization.StringSerializer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -24,7 +21,7 @@ public class csvProducerObject {
         final Properties props = loadConfig("src/main/java/AppConfig/kafkaServer.properties");
 
         props.setProperty(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, IntegerSerializer.class.getName());
-        props.setProperty(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, Serdes.ObjectSerializer.class.getName());
+        props.setProperty(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, PersonModelSerializer.class.getName());
 
         final String topicName = "simple-producer";
 

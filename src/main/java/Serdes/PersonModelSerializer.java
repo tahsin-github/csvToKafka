@@ -2,16 +2,14 @@ package Serdes;
 
 import ReadCsv.PeopleInformationModel;
 import org.apache.kafka.common.errors.SerializationException;
-import org.apache.kafka.common.header.Headers;
 import org.apache.kafka.common.serialization.Serializer;
 
-import java.nio.charset.StandardCharsets;
 import java.util.Map;
 import java.nio.ByteBuffer;
 
 
 
-public class ObjectSerializer implements Serializer<PeopleInformationModel> {
+public class PersonModelSerializer implements Serializer<PeopleInformationModel> {
     private String encoding = "UTF8";
 
     /**
@@ -71,7 +69,7 @@ public class ObjectSerializer implements Serializer<PeopleInformationModel> {
             sizeOfProfession = serializedProfession.length;
             sizeOfFieldName = serializedFieldName.length;
 
-            ByteBuffer buf = ByteBuffer.allocate(4 + 4 + sizeOfId +
+            ByteBuffer buf = ByteBuffer.allocate(4 + sizeOfId +
                     4 + sizeOfFirstname +
                     4 + sizeOfLastName +
                     4 + sizeOfEmail +
@@ -79,7 +77,7 @@ public class ObjectSerializer implements Serializer<PeopleInformationModel> {
                     4 + sizeOfProfession +
                     4 + sizeOfFieldName);
 
-            buf.putInt(data.getId());
+
 
             buf.putInt(sizeOfId);
             buf.put(serializedId);
@@ -101,6 +99,8 @@ public class ObjectSerializer implements Serializer<PeopleInformationModel> {
 
             buf.putInt(sizeOfFieldName);
             buf.put(serializedFieldName);
+
+            buf.flip();
 
 
             return buf.array();
